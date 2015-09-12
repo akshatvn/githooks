@@ -1,0 +1,17 @@
+#!/bin/sh
+# This is a git hook for unreleased changes file creation. Whenever you switch to any branch. If unreleased changes don't have change log file for that branch. This hook will create one for you and copy the sample content to it. Release and master will not have unreleased_changes file
+
+# --- Command line
+
+branch=$(git branch | sed -n -e 's/^\* \(.*\)/\1/p')
+
+if [ "$branch" == "release" ]; then
+  echo "Woohoo.. Seems like new code is going live. :)"
+
+elif [ "$branch" == "master" ]; then
+  echo "Starting a new feature? Create a branch :)"
+
+elif [ ! -f "$PWD/unreleased_changes/$branch.md" ]; then
+  echo "UnReleased Changes File not found! Creating One from Sample"
+  cp "$PWD/unreleased_changes/sample_example.md" "$PWD/unreleased_changes/$branch.md"
+fi

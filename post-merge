@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ ! -z `git diff --name-only HEAD@{1}..HEAD Gemfile` ]
+then
+  echo -e "\033[0;31m*** Gemfile change detected, running bundle install ***\033[0m"
+  bundle install
+fi
+
+if [ ! -z `git diff --name-only HEAD@{1}..HEAD db/migrate` ]
+then
+  echo -e "\033[0;31m*** Migration changes detected, running rake db:migrate ***\033[0m"
+  rake db:migrate
+fi
+
+if [ ! -z `git diff --name-only HEAD@{1}..HEAD db/data` ]
+then
+  echo -e "\033[0;31m*** Data Migration changes detected, running rake data:migrate ***\033[0m"
+  rake data:migrate
+fi
