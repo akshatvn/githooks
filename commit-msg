@@ -1,6 +1,14 @@
 #!/bin/sh
-NAME=$(git branch | grep '*' | sed 's/* //' | grep -o -i "WEB-[0-9]*" | tr 'a-z' 'A-Z')
+#
+# This picks up anything matching 'task-1234'(case insensitive) in your branch name
+# and prepends it to every commit message.
+#
+# e.g.
+# for branch name 'solve-pesky-bug-task-42' if your commit message was
+# 'initial commit' it will get changed to 'TASK-42: initial commit'
+#
+NAME=$(git branch | grep '*' | sed 's/* //' | grep -o -i "TASK-[0-9]*" | tr 'a-z' 'A-Z')
 if [ -n "$NAME" ]
-then 
+then
   echo "$NAME"': '$(cat "$1") > "$1"
 fi
