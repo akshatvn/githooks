@@ -24,6 +24,7 @@
 #   in the repository.  By default this is allowed.
 #
 
+
 # --- Command line
 refname="$1"
 oldrev="$2"
